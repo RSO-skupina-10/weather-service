@@ -1,0 +1,34 @@
+kumuluzee:
+  name: weather-service
+  version: 1.0.0
+  env:
+    name: dev
+  server:
+    base-url: http://localhost:8082
+    http:
+      port: 8082
+  metrics:
+    web-instrumentation:
+      - name: metrics-endpoint
+        url-pattern: /restaurants/*
+        status-codes: "200,201,204,400,404,500"
+  logs:
+    config-file: '<?xml version="1.0" encoding="UTF-8"?>
+                    <Configuration name="weather">
+                        <Appenders>
+                            <Console name="console" target="SYSTEM_OUT">
+                                <PatternLayout pattern="%d %p %marker %m %X %ex %n"/>
+                            </Console>
+                        </Appenders>
+                        <Loggers>                 
+                            <!-- Default logger -->
+                            <Root level="all">
+                                <AppenderRef ref="console" level="info" />
+                            </Root>
+                        </Loggers>
+                    </Configuration>'
+
+app-properties:
+  weatherapi:
+    access-key: 111
+    secret-key: 111
