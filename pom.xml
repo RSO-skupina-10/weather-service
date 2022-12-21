@@ -51,6 +51,11 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
+                <groupId>si.rso.skupina10</groupId>
+                <artifactId>services</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.kumuluz.ee.rest</groupId>
                 <artifactId>kumuluzee-rest-core</artifactId>
                 <version>${kumuluzee-rest.version}</version>

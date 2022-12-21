@@ -7,6 +7,8 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.logging.Logger;
 
 @ApplicationScoped
@@ -24,6 +26,27 @@ public class WeatherClient {
         log.info("Inicializacija zrna " + WeatherClient.class.getName());
 
         httpClient = ClientBuilder.newClient();
+        //httpClient.getProtocolHandlers().remove(WWWAuthenticationProtocolHandler.NAME);
+    }
+
+    public int getRate(String city) {
+        Response response = null;
+        try {
+            response = httpClient.target(baseUrl + "/current.json?q=" + city)
+                    .request(MediaType.APPLICATION_JSON)
+                    .header("X-RapidAPI-Key", restProperties.getWeatherApiSecretKey())
+                    .header("X-RapidAPI-Host", "weatherapi-com.p.rapidapi.com")
+                    .get();
+        } catch (Exception e) {
+            log.severe(e.getMessage());
+        }
+        if(response.getStatus() > 199 && response.getStatus() < 300) {
+            log.info("Got response");
+            System.out.println(response.readEntity(String.class));
+        } else {
+            log.info("Request failed " + response.getStatus());
+        }
+        return 1;
     }
 
 

@@ -30,5 +30,4 @@ kumuluzee:
 
 app-properties:
   weatherapi:
-    access-key: 111
-    secret-key: 111
+    secret-key:
