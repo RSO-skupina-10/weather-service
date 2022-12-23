@@ -5,10 +5,12 @@ import si.rso.skupina10.services.config.RestProperties;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.json.*;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.StringReader;
 import java.util.logging.Logger;
 
 @ApplicationScoped
@@ -29,7 +31,7 @@ public class WeatherClient {
         //httpClient.getProtocolHandlers().remove(WWWAuthenticationProtocolHandler.NAME);
     }
 
-    public int getRate(String city) {
+    public Integer getRate(String city) {
         Response response = null;
         try {
             response = httpClient.target(baseUrl + "/current.json?q=" + city)
@@ -40,13 +42,41 @@ public class WeatherClient {
         } catch (Exception e) {
             log.severe(e.getMessage());
         }
-        if(response.getStatus() > 199 && response.getStatus() < 300) {
+        if(response != null && response.getStatus() > 199 && response.getStatus() < 300) {
+            //System.out.println(response);
             log.info("Got response");
-            System.out.println(response.readEntity(String.class));
-        } else {
+            String jsonString = response.readEntity(String.class);
+            //System.out.println(jsonString);
+            JsonReader reader = Json.createReader(new StringReader(jsonString));
+            JsonObject jsonObject = reader.readObject();
+            JsonObject current = jsonObject.getJsonObject("current");
+            //System.out.println(current);
+            JsonNumber temp = current.getJsonNumber("temp_c");
+            JsonNumber precip_mm = current.getJsonNumber("precip_mm");
+            //System.out.println(temp);
+            float t = (float) temp.doubleValue();
+            float p = (float) precip_mm.doubleValue();
+            if (t < 15) {
+                if (p > 1) {
+                    return 3;
+                }
+                return 2;
+            } else if (t > 30) {
+                if (p > 1) {
+                    return 3;
+                }
+                return 2;
+            }
+            if (p > 1) {
+                return 2;
+            }
+            return 1;
+        } else if(response != null){
             log.info("Request failed " + response.getStatus());
+        } else {
+            log.info("Request failed ");
         }
-        return 1;
+        return null;
     }
 
 
