@@ -20,7 +20,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: pg-pass4
-                  key: KUMULUZEE_DATASOURCES0_PASSWORD
+                  key: APPPROPERTIES_WEATHERAPI_SECRETKEY
           ports:
             - containerPort: 8082
               name: server
