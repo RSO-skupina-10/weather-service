@@ -19,9 +19,9 @@ public class WeatherResource {
 
 
     @GET
-    @Path("{city}")
-    public Response getPriceFactor(@PathParam("city") String city) {
-        int resp = weatherClient.getRate(city);
+    @Path("{latlng}")
+    public Response getPriceFactor(@PathParam("latlng") String latlng) {
+        int resp = weatherClient.getRate(latlng);
 
         return Response.ok(resp).build();
     }

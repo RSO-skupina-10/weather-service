@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orders-catalog
+  template:
+    metadata:
+      labels:
+        app: weather-service
+    spec:
+      containers:
+        - image: klemen1999/weather-service:2023-01-07-16-42-45
+          name: weather-service
+          env:
+            - name: APPPROPERTIES_WEATHERAPI_SECRETKEY
+              valueFrom:
+                secretKeyRef:
+                  name: pg-pass4
+                  key: KUMULUZEE_DATASOURCES0_PASSWORD
+          ports:
+            - containerPort: 8082
+              name: server
+              protocol: TCP
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: weather-service
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8082
+      protocol: TCP
+      targetPort: server
+  selector:
+    app: weather-service

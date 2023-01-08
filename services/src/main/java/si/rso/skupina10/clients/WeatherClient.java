@@ -31,10 +31,10 @@ public class WeatherClient {
         //httpClient.getProtocolHandlers().remove(WWWAuthenticationProtocolHandler.NAME);
     }
 
-    public Integer getRate(String city) {
+    public Integer getRate(String latlng) {
         Response response = null;
         try {
-            response = httpClient.target(baseUrl + "/current.json?q=" + city)
+            response = httpClient.target(baseUrl + "/current.json?q=" + latlng)
                     .request(MediaType.APPLICATION_JSON)
                     .header("X-RapidAPI-Key", restProperties.getWeatherApiSecretKey())
                     .header("X-RapidAPI-Host", "weatherapi-com.p.rapidapi.com")
@@ -53,7 +53,8 @@ public class WeatherClient {
             //System.out.println(current);
             JsonNumber temp = current.getJsonNumber("temp_c");
             JsonNumber precip_mm = current.getJsonNumber("precip_mm");
-            //System.out.println(temp);
+//            System.out.println(temp);
+//            System.out.println(precip_mm);
             float t = (float) temp.doubleValue();
             float p = (float) precip_mm.doubleValue();
             if (t < 15) {

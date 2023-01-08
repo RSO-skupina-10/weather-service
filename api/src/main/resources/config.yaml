@@ -10,7 +10,7 @@ kumuluzee:
   metrics:
     web-instrumentation:
       - name: metrics-endpoint
-        url-pattern: /restaurants/*
+        url-pattern: /v1/weather/*
         status-codes: "200,201,204,400,404,500"
   logs:
     config-file: '<?xml version="1.0" encoding="UTF-8"?>
