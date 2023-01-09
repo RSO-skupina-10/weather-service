@@ -1,5 +1,6 @@
 package si.rso.skupina10.api.v1.resources;
 
+import org.eclipse.microprofile.metrics.annotation.Timed;
 import si.rso.skupina10.clients.WeatherClient;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -20,6 +21,7 @@ public class WeatherResource {
 
     @GET
     @Path("{latlng}")
+    @Timed (name = "weather_api_call")
     public Response getPriceFactor(@PathParam("latlng") String latlng) {
         int resp = weatherClient.getRate(latlng);
 
