@@ -31,3 +31,4 @@ kumuluzee:
 app-properties:
   weatherapi:
     secret-key: cd4df2253bmshe0064fb08253c5fp1ac629jsn443fdda8f4ed
+    timeout: false

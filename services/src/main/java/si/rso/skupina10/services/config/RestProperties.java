@@ -13,9 +13,15 @@ public class RestProperties {
     @ConfigValue("weatherapi.secret-key")
     private String weatherApiSecretKey;
 
+    @ConfigValue("weatherapi.timeout")
+    private Boolean timeout;
+
+    public Boolean getTimeout() { return this.timeout;}
+
+    public void setTimeout(Boolean hideKey) {this.timeout = hideKey;}
 
     public String getWeatherApiSecretKey() {
-        return weatherApiSecretKey;
+            return weatherApiSecretKey;
     }
 
     public void setWeatherApiSecretKey(String weatherApiSecretKey) {
